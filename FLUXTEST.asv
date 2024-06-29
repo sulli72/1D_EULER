@@ -1,0 +1,175 @@
+%% Main driver code for solving 1D Euler system
+% The compressible gas-dynamics equation are cast in conservative form
+% q_t + F(q)_x = 0
+%
+% q = [r ru E];
+% q is the vector of conserved variables
+% r == density
+% u == velocity
+% E = total energy ( E = re, e = p/(r(gamma - 1)) + 0.5*u^2 );
+
+% Multiple spatial discretizations for hyperbolic system of eqns the can be selected
+%
+% Option 1: 1st Order Roe scheme -- the classical approximate Riemann
+% solver of Phillit Roe
+%
+% Option 2: Component-wise 5th order WENO scheme of Jang and Shu, with Lax-Friedrichs flux
+% splitting
+%
+% Option 3: Characteristic-wise 5th order WENO scheme of Jang and Shu, Roe
+% Formulation
+%
+% Option 4: Characteristic-wise 5th order WENO scheme with Lax-Friedrichs
+% flux splitting
+%
+% Option 5: 6th order centered WENO scheme of Hu and Adams
+% (also with Roe formulation for the characteristic decomposition)
+
+%%% NOTE -- to pick the flux function spatial scheme, uncomment the one you
+%%% want in the solution loop below
+%%% BUT ensure that the other flux schemes are commented out
+
+clearvars; clc; close all;
+set(0,'defaultFigureRenderer','painters')
+set(groot,'defaulttextinterpreter','latex');
+set(groot,'defaultLegendInterpreter','latex');
+set(groot,'defaultAxesTickLabelInterpreter','latex');
+addpath 'C:\Users\Jack\Documents\MATLAB\Add-Ons\Collections\cmap\cmap-master\cmap-master'
+%%% ===== End of Header ===== %%%
+
+%% Grid Generation & Physical Constants
+% Number of grid points
+nx=200;
+
+% Ratio of specific heats for gas of choice - g == 1.4 for air
+g=1.4;
+
+%% Initial Condition
+
+% Case List -- Uncomment the case you want to use
+% setting the imvie parameter to 1 animates the soln on the fly
+% setting the imvie parameter to 0 does not animate the movie
+
+%%% CASE OPTIONS
+% CASE='SOD'; imvie=0;
+% CASE='SHU'; imvie=0;
+% CASE='BLASTWAVES'; imvie=0;
+% CASE='MMS';
+% CASE='STEADY'; imvie=0;
+% CASE='LAX'; imvie=0;
+% CASE='123'; imvie=0;
+
+% Alloate initial condition
+[Q,xv,tf]=ICMAKER(CASE,nx,g);
+dx=xv(2)-xv(1);
+[r,u,p] = Q2PRIM(Q,g);
+
+% Plots initial condition
+PRIMPLOT(r,u,p,xv,g)
+
+% Speed of sound, used for flux splitting and CFL constraint
+c=(g*p./r).^0.5;
+
+cont=input('Enter any number to continue\n');
+
+%% Time Marching Parameters
+CFL=.6; % CFL number
+wvsp=max(abs(u)+c); % Maximum characteristic wavespeed in initial condition
+dt=CFL*dx/wvsp; % Timestep size -- selected for stability
+nsteps=floor(tf/dt); % Determine number of timesteps
+
+%%% If SOD or SHU cases are selected, the 'exact' solution
+%%% will be plotted once the numerical solution is completed
+%%% Note: the exact solution is computed with the WENO5 characteristic
+%%% scheme using 4000 grid points
+
+switch CASE
+  case 'SOD'
+    exsoln=load('SOD_PROFILES_EXACT.mat');
+    xex=exsoln.xv;
+    rex=exsoln.r;
+    pex=exsoln.p;
+    uex=exsoln.u;
+  case 'SHU'
+    exsoln=load('SHU_RHO_PROFILE_EXACT.mat');
+    xex=exsoln.xv;
+    rex=exsoln.r;
+end
+
+tic %<-- meaure run time
+t=0;
+it=0;
+maxits=2E3; %<-- set upper bound on iterations if needed
+
+while t<tf && it<maxits
+
+  wvsp=WAVESPEED(Q,g); % used for updating CFL on the fly
+  dt=CFL*dx/wvsp;
+
+  %%% --- 1st Order Roe Scheme w/ 1st order time integration --- %%%
+  %%% Uncomment these following 2 lines for 1st order Roe scheme
+
+
+  % Q = ROEFIRST(Q,dx,dt,g);   % <--- Spatial scheme option 1
+  % Q = WENO_RK3(Q,dx,dt,g);   % <--- Spatial scheme option 2
+  % Q = RK3_WENORF(Q,dx,dt,g); % <--- Spatial scheme option 3
+  % Q = CHAR_RK3(Q,dx,dt,g);   % <--- Spatial scheme option 4
+  % Q = CU6_RK3(Q,dx,dt,g);    % <--- Spatial scheme option 5
+
+
+  % Upate command window
+  fprintf(1,'Iteration %i\n',it)
+  it=it+1;
+  tv(it)=t;
+  t=t+dt;
+
+  entry=it;
+
+  
+  %   [r,u,p]=Q2PRIM(Q,g);
+  %   RMAT(:,entry)=r;
+  %   UMAT(:,entry)=u;
+  %   PMAT(:,entry)=p;
+
+
+  if imvie==1
+    [r,u,p] = Q2PRIM(Q,g);
+    PRIMPLOT(r,u,p,xv,g)
+  end
+
+end
+toc
+
+
+%% Plotting Solution
+[r,u,p]=Q2PRIM(Q,g);
+PRIMPLOT(r,u,p,xv,g)
+
+switch CASE
+  case 'SHU'
+    RHOPLOT(r,xv,rex,xex);
+end
+
+switch CASE
+  case 'SOD'
+    RHOPLOT(r,xv,rex,xex);
+end
+
+
+
+%% Plotting Characteristics
+% Uncomment the lines below if you want to plot the characteristic waves of
+% the problem of interest
+
+% CHARPLOT(RMAT,xv,dt,tf-dt,'Denstiy');
+% CHARPLOT(UMAT,xv,dt,tf-dt,'Velocity');
+% CHARPLOT(PMAT,xv,dt,tf-dt,'Pressure');
+
+
+
+
+
+
+
+
+
