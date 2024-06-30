@@ -73,4 +73,35 @@ each numerical algorithm. References to usefule papers and textbooks are include
 While the published code is written in Matlab, hopefully conversion to a different language can be accomplished in a relatively straightforward manner
 through the use of some online GPT.
 
+
+A HANDFUL OF FIGURES:
+
+Herein I've included several figures that demonstrate the validity of the code.
+
+
+Verification of 6th order accuract for WENO6 scheme - done by comparing a smooth numerical solution to Burgers' equation to an exact solution.
+Exact solution obtained through Newtons method prior to shock formation. Order of accuracy is computed using the L1-norm of the numerical solution.
+
+![burgers_weno6](https://github.com/sulli72/1D_EULER/assets/37673021/b26c0c2b-03f8-4acf-a544-491eaafc9853)
+
+Copmuted solution to the Sod shock tube problem using WENO5 - Roe formulation. Shown are the 1D profiles at taken at t = 0.2. 
+The second figure shows the x-t plane for density, highlighting the expansion fan, contact wave, and shock wave that all develop
+from the discontinuity in the initial condition.
+
+![WENO5-SOD](https://github.com/sulli72/1D_EULER/assets/37673021/9ee9ef7f-58e2-4c8d-8504-dea90f1e47ee)
+
+![density_chars_sod](https://github.com/sulli72/1D_EULER/assets/37673021/813b508a-aba7-4398-9952-d6d7051e1cac)
+
+Finally, here is a comparison between the WENO5 and WENO6 methods (both using the Roe approach to wave speed determination). Since the WENO6 scheme
+retains a symmetric stencil in smooth regions, it captures the high wavenumber features of the entropy disturbance significantly better than the
+dissipative WENO5 scheme using the same mesh. Note that the 'exact' solution was computed on a 4000 point mesh using the WENO5 scheme.
+
+
+
+i)  WENO5
+![WENO5-SHU-V2](https://github.com/sulli72/1D_EULER/assets/37673021/22d4dff9-9faf-4de9-befd-27c935b13542)
+
+ii) WENO6
+![WENO6-SHU-V2](https://github.com/sulli72/1D_EULER/assets/37673021/87f1363f-1976-437c-8b45-759d426f0412)
+
    
