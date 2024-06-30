@@ -12,12 +12,18 @@ Several options for the spatial flux differencing scheme, time integration metho
 SPATIAL FLUX SCHEMES
 1) First order Roe scheme
 2) WENO5 schemes as proposed by Prof. Chi Wang Shu and his collaborators
-  i)   WENO5 Component wise reconstruction scheme
-  ii)  WENO5 Characteristic wise reconstruction - Lax-Friedrichs flux splitting approach
-  iii) WENO5 Characteristic wise reconstruction - Roe flux splitting approach
-3) WENO6 schemes proposed by Hu and Adams
-  i)   WENO6 Characteristic wise reconstruction - Lax-Friedrichs flux splitting approach
-  ii)  WENO6 Characteristic wise reconstruction - Roe flux splitting approach
+   
+    i)   WENO5 Component wise reconstruction scheme
+  
+    ii)  WENO5 Characteristic wise reconstruction - Lax-Friedrichs flux splitting approach
+    
+    iii) WENO5 Characteristic wise reconstruction - Roe flux splitting approach
+  
+4) WENO6 schemes proposed by Hu and Adams
+   
+    i)   WENO6 Characteristic wise reconstruction - Lax-Friedrichs flux splitting approach
+
+     ii)  WENO6 Characteristic wise reconstruction - Roe flux splitting approach
 
 TIME INTEGRATION SCHEMES
 1) First order explicit Euler method
@@ -34,8 +40,10 @@ SOLUTION VISUALIZATION AND COMPARISION
 1) Built in plotting routines for 1D profiles
 2) Ability to view x-t plane to visualze characteristic wave fronts
 3) Exact solutions (computed on fine meshes w/ high order schemes) for the following problems
-   i)  Sod problem
-   ii) Shu-Osher problem
+   
+     i)  Sod problem
+   
+      ii) Shu-Osher problem
 
 
 WHAT THE REPOSITORY IS FOR:
