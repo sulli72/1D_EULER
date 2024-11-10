@@ -108,6 +108,7 @@ ii) WENO6
 ![WENO6-SHU-V2](https://github.com/sulli72/1D_EULER/assets/37673021/87f1363f-1976-437c-8b45-759d426f0412)
 
 iii) WENO6 SOLUTION 
+
 ![shu_soln](https://github.com/user-attachments/assets/56e27206-9a91-42ae-9239-02fd715457c1)
 
    
