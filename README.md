@@ -1,4 +1,4 @@
-WHAT THE REPOSITORY CONTAINS:
+![sod_soln](https://github.com/user-attachments/assets/1cdd2fae-2599-4ca1-a327-5dd494c4bdc8)WHAT THE REPOSITORY CONTAINS:
 This is a suite of codes for solving the 1D Euler equations. For those unfamiliar, these equations govern the flow of a frictionless gas in one dimension. 
 The key feature of the 1D Euler equations is they allow for shock wave formation owing to their inherent non-linear nature, making them a simple set of equations that
 still captures some of the key physics that occurs during processes like supersonic flight, atmospheric re-entry, and stellar supernovae.
@@ -84,17 +84,23 @@ Exact solution obtained through Newtons method prior to shock formation. Order o
 
 ![burgers_weno6](https://github.com/sulli72/1D_EULER/assets/37673021/b26c0c2b-03f8-4acf-a544-491eaafc9853)
 
-Copmuted solution to the Sod shock tube problem using WENO5 - Roe formulation. Shown are the 1D profiles at taken at t = 0.2. 
+Copmuted solution to the Sod shock tube problem using WENO5 - Roe formulation. Shown are the temporally developing 1D variable profiles within the domain. 
 The second figure shows the x-t plane for density, highlighting the expansion fan, contact wave, and shock wave that all develop
 from the discontinuity in the initial condition.
 
 ![WENO5-SOD](https://github.com/sulli72/1D_EULER/assets/37673021/9ee9ef7f-58e2-4c8d-8504-dea90f1e47ee)
 
+
+![sod_soln](https://github.com/user-attachments/assets/7c1650e0-e177-47f6-af5d-892a198bb6be)
+
+
+
 ![density_chars_sod](https://github.com/sulli72/1D_EULER/assets/37673021/813b508a-aba7-4398-9952-d6d7051e1cac)
 
 Finally, here is a comparison between the WENO5 and WENO6 methods (both using the Roe approach to wave speed determination). Since the WENO6 scheme
 retains a symmetric stencil in smooth regions, it captures the high wavenumber features of the entropy disturbance significantly better than the
-dissipative WENO5 scheme using the same mesh. Note that the 'exact' solution was computed on a 4000 point mesh using the WENO5 scheme.
+dissipative WENO5 scheme using the same mesh. Note that the 'exact' solution was computed on a 4000 point mesh using the WENO5 scheme. 
+Also included is the time-varying solution using the WENO6 scheme.
 
 
 
@@ -103,5 +109,8 @@ i)  WENO5
 
 ii) WENO6
 ![WENO6-SHU-V2](https://github.com/sulli72/1D_EULER/assets/37673021/87f1363f-1976-437c-8b45-759d426f0412)
+
+iii) WENO6 SOLUTION 
+![shu_soln](https://github.com/user-attachments/assets/56e27206-9a91-42ae-9239-02fd715457c1)
 
    
